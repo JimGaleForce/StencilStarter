@@ -1,0 +1,33 @@
+{
+  "name": "StencilJS Starter",
+  "version": "0.1.0.1",
+  "manifest_version": 2,
+  "description": "StencilJS Starter",
+  "browser_action": {
+    "default_title": "starter",
+    "default_popup": "index.html"
+  },
+  "background": {
+    "scripts": [
+      "assets/js/background.js"
+    ],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://localhost/*"
+      ],
+      "js": [
+        "assets/js/content.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "notifications",
+    "storage",
+    "tabs",
+    "activeTab"
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://unpkg.com ; object-src 'self'"
+}

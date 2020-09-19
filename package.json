@@ -1,0 +1,27 @@
+{
+  "name": "locode",
+  "private": true,
+  "version": "0.0.1",
+  "description": "locode",
+  "license": "MIT",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "stencil build",
+    "dev": "stencil build --dev --watch --serve",
+    "start": "stencil build --dev --watch --serve",
+    "test": "stencil test --spec --e2e",
+    "test.watch": "stencil test --spec --e2e --watch",
+    "generate": "stencil generate"
+  },
+  "devDependencies": {
+    "@ionic/core": "^5.3.3",
+    "@stencil/core": "^2.0.3"
+  },
+  "dependencies": {
+    "ionicons": "^5.1.2",
+    "moment": "^2.28.0",
+    "msal": "^1.4.0"
+  }
+}

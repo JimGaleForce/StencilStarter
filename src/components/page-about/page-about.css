@@ -1,0 +1,24 @@
+page-about {
+    /* Component styles go here */
+}
+
+.aboutinfo {
+  font-style: italic;
+}
+
+.linex {
+  display: inline-block;
+  clear:both;
+}
+
+.success {
+  color: var(--ion-color-success);
+}
+
+.danger {
+  color: var(--ion-color-danger);
+}
+
+.warning {
+  color: var(--ion-color-warning);
+}
