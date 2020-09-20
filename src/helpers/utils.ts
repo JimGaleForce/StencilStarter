@@ -9,9 +9,9 @@ export function isProdMode(): boolean {
   return !isLocalDebugMode;
 }
 
-export async function getUrl(url: string, isJson: boolean = true, mime: any = 'application/json') {
+export async function getUrl(url: string, isJson: boolean = true, mime: any = 'application/json', isSecure: boolean = true) {
   if (url.indexOf("$api$") > -1) {
-    var repl = theServer; //CHANGE
+    var repl = theServer;
     if (isLocalDebugMode) {
       repl = "https://localhost:44346/api";
     }
@@ -24,7 +24,11 @@ export async function getUrl(url: string, isJson: boolean = true, mime: any = 'a
   }
 
   //  try {
-  const response = await fetchWithToken(url, {
+  const response = isSecure ? await fetchWithToken(url, {
+    method: "GET",
+    headers: headers//,
+    //credentials: isLocalDebugMode ? 'omit' : 'include'
+  }) : await fetch(url, {
     method: "GET",
     headers: headers//,
     //credentials: isLocalDebugMode ? 'omit' : 'include'
@@ -41,9 +45,9 @@ export function getMe() {
   return msalI.account ? msalI.account.userName : "";
 }
 
-export async function postUrl(url: string, data: any, isJson: boolean = true) {
+export async function postUrl(url: string, data: any, isJson: boolean = true, isSecure: boolean = true) {
   if (url.indexOf("$api$") > -1) {
-    var repl = theServer; //CHANGE
+    var repl = theServer;
     if (isLocalDebugMode) {
       repl = "https://localhost:44346/api";
     }
@@ -55,13 +59,18 @@ export async function postUrl(url: string, data: any, isJson: boolean = true) {
     headers['Content-Type'] = 'application/json';
   }
 
-  //  try {
-  const response = await fetchWithToken(url, {
-    method: "POST",
-    headers: headers,
-    body: isJson ? JSON.stringify(data) : data//,
-    //credentials: isLocalDebugMode ? 'omit' : 'include'
-  });
+  const response =
+    isSecure ? await fetchWithToken(url, {
+      method: "POST",
+      headers: headers,
+      body: isJson ? JSON.stringify(data) : data//,
+      //credentials: isLocalDebugMode ? 'omit' : 'include'
+    }) : await fetch(url, {
+      method: "POST",
+      headers: headers,
+      body: isJson ? JSON.stringify(data) : data//,
+      //credentials: isLocalDebugMode ? 'omit' : 'include'
+    });
 
   if (response === null) {
     return null;
@@ -138,7 +147,7 @@ export async function getUrlX(url: string, isJson: boolean = true, mime: any = '
       //var repl = isLocal ? "http://localhost:5628" : ("https://api.improvethe.world");
       //https://localhost:44359/api/lens?forMapName=histogram_bucket_count_map_json&forMapValue=4&groupName=osversion
       var repl = "https://localhost:44346/api";
-      var repl = theServer; //CHANGE
+      var repl = theServer;
       url = url.replace("$api$", repl);
     }
 
@@ -168,7 +177,7 @@ export async function postUrlX(url: string, data: any, isJson: boolean = true) {
       //var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
       //var repl = isLocal ? "http://localhost:5628" : ("https://api.improvethe.world");
       var repl = "https://localhost:44346/api";
-      var repl = theServer; //CHANGE
+      var repl = theServer;
       url = url.replace("$api$", repl);
     }
 
